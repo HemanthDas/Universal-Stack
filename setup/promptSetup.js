@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import { setupProject } from "./installDeps.js";
 
-async function promptForSetup() {
+export async function promptForSetup() {
   const answers = await inquirer.prompt([
     {
       type: "input",
@@ -35,7 +35,23 @@ async function promptForSetup() {
     },
   ]);
 
-  await setupProject(answers);
+  // If adding an Express backend, prompt for the server file name
+  let serverFile = "server.js"; // default value
+  if (answers.addBackend) {
+    serverFile = await promptServerFile(); // If the backend is being set up, prompt for server file name
+  }
+  await setupProject({ ...answers, serverFile }); // Pass serverFile to setupProject
 }
 
-export { promptForSetup };
+// Function to prompt for server file name
+async function promptServerFile() {
+  const { serverFile } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "serverFile",
+      message: "Enter the name of the server file (default: server.js):",
+      default: "server.js",
+    },
+  ]);
+  return serverFile;
+}

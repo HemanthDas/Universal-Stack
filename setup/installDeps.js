@@ -31,15 +31,17 @@ async function setupProject({
   addTailwind,
   addReactRouter,
   addBackend,
+  serverFile,
 }) {
   const variant = language === "JavaScript" ? "react" : "react-ts";
   projectDir = path.resolve(process.cwd(), projectName); // Resolve absolute path
 
   const spinner = createSpinner(
-    `Creating Vite React project: ${projectName}...`
+    `Creating Vite ${language} project: ${projectName}...`
   ).start();
 
   try {
+    // Create the Vite project
     await runCommand("npm", [
       "create",
       "vite@latest",
@@ -56,27 +58,45 @@ async function setupProject({
     }
 
     process.chdir(projectDir); // Change to the project directory
-    await installDependencies(addTailwind, addReactRouter, addBackend);
+    await installDependencies(
+      addTailwind,
+      addReactRouter,
+      addBackend,
+      serverFile
+    );
   } catch (error) {
     spinner.error({ text: `Error: ${error.message}` });
-    cleanupProject(projectDir); // Clean up on failure
+    await cleanupProject(projectDir); // Clean up on failure
     process.exit(1);
   }
 }
 
-async function installDependencies(addTailwind, addReactRouter, addBackend) {
+async function installDependencies(
+  addTailwind,
+  addReactRouter,
+  addBackend,
+  serverFile
+) {
   const spinner = createSpinner("Installing dependencies...").start();
 
   try {
+    // Install project dependencies
     await runCommand("npm", ["install"]);
     spinner.success({ text: "Dependencies installed successfully!" });
 
-    if (addTailwind) await setupTailwind();
-    if (addReactRouter) await setupReactRouter();
-    if (addBackend) await setupExpress();
+    // Setup additional features based on user input
+    if (addTailwind) {
+      await setupTailwind();
+    }
+    if (addReactRouter) {
+      await setupReactRouter();
+    }
+    if (addBackend) {
+      await setupExpress(serverFile); // Pass backend details to setupExpress
+    }
   } catch (error) {
     spinner.error({ text: `Error installing dependencies: ${error.message}` });
-    cleanupProject(projectDir); // Clean up on failure
+    await cleanupProject(projectDir); // Clean up on failure
     process.exit(1);
   }
 }

@@ -1,7 +1,9 @@
 import { exec } from "child_process";
 import semver from "semver";
+
 function checkNodeAndNpm() {
   const MIN_NODE_VERSION = "14.0.0";
+
   return new Promise((resolve, reject) => {
     exec("node -v", (err, stdout) => {
       if (err) {
@@ -31,4 +33,5 @@ function checkNodeAndNpm() {
     });
   });
 }
+
 export { checkNodeAndNpm };

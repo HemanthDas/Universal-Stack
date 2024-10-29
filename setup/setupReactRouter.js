@@ -3,13 +3,13 @@ import { promisify } from "util";
 
 const exec = promisify(execCallback);
 
-export async function setupReactRouter() {
-  console.log("Adding React Router...");
+export async function setupReactRouter(spinner) {
+  spinner.update({ text: "Adding React Router..." });
   try {
     await exec("npm install react-router-dom");
-    console.log("React Router added successfully!");
+    spinner.success({ text: "React Router installed successfully!" });
   } catch (error) {
-    console.error(`Error installing React Router: ${error.message}`);
+    spinner.error({ text: `Error adding React Router: ${error.message}` });
     process.exit(1);
   }
 }

@@ -2,34 +2,29 @@ import { exec as execCallback } from "child_process";
 import { promisify } from "util";
 import fs from "fs/promises";
 import path from "path";
-import { createSpinner } from "nanospinner";
 
 const exec = promisify(execCallback);
 
-export async function setupExpress(serverFile) {
-  const spinner = createSpinner("Setting up Express backend...").start();
+export async function setupExpress(serverFile, spinner) {
   try {
     const backendDir = path.join(process.cwd(), "backend");
     await fs.mkdir(backendDir);
-    console.log("Created backend directory.");
-
-    // Use the serverFile parameter instead of prompting for it
+    spinner.update({ text: "Creating Express server file..." });
     await createServerFile(backendDir, serverFile);
-    spinner.update({ text: "Creating server file..." });
 
     await createDirectoriesAndSampleFiles(backendDir);
-    spinner.update({
-      text: "Creating directory structure and sample files...",
-    });
-
-    spinner.update({ text: "Installing Express and dependencies..." });
     await exec(
-      `cd ${backendDir} && npm init -y && npm install express cors dotenv`
+      `cd ${backendDir} && npm init -y && npm install express cors dotenv nodemon`
     );
 
-    spinner.success({ text: "Express backend created successfully!" });
+    const packageJsonPath = path.join(backendDir, "package.json");
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf8"));
+    packageJson.main = serverFile;
+    packageJson.scripts = { start: `nodemon ${serverFile}` };
+    await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+    spinner.success({ text: "Express setup complete!" });
   } catch (error) {
-    spinner.error({ text: `Error: ${error.message}` });
+    spinner.error({ text: `Error setting up Express: ${error.message}` });
     process.exit(1);
   }
 }

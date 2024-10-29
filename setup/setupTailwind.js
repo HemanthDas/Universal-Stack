@@ -4,16 +4,15 @@ import { promisify } from "util";
 
 const exec = promisify(execCallback);
 
-export async function setupTailwind() {
-  console.log("Adding Tailwind CSS...");
+export async function setupTailwind(spinner) {
+  spinner.start({ text: "Adding Tailwind CSS..." }); // Start the spinner
   try {
     await exec(
       `npm install -D tailwindcss postcss autoprefixer && npx tailwindcss init -p`
     );
-    console.log("Tailwind CSS added successfully!");
+    spinner.success({ text: "Tailwind CSS added successfully!" }); // Use spinner for success
 
-    const tailwindConfig = `
-/** @type {import('tailwindcss').Config} */
+    const tailwindConfig = `/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -26,15 +25,17 @@ export default {
 }`;
 
     await writeFile("tailwind.config.js", tailwindConfig);
-    console.log("Tailwind configuration updated successfully!");
+    spinner.success({ text: "Tailwind configuration updated successfully!" }); // Use spinner for success
 
     await writeFile(
       "src/index.css",
       `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n`
     );
-    console.log("index.css updated with Tailwind directives successfully!");
+    spinner.success({
+      text: "index.css updated with Tailwind directives successfully!",
+    }); // Use spinner for success
   } catch (error) {
-    console.error(`Error setting up Tailwind CSS: ${error.message}`);
+    spinner.error({ text: `Error setting up Tailwind CSS: ${error.message}` }); // Use spinner for error
     process.exit(1);
   }
 }

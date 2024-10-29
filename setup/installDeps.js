@@ -11,8 +11,10 @@ let projectDir = "";
 
 function runCommand(command, args) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio: "inherit", shell: true });
-
+    const child = spawn(command, args, {
+      stdio: ["ignore", "pipe", "pipe"],
+      shell: true,
+    });
     child.on("close", (code) => {
       if (code !== 0) {
         reject(new Error(`Command failed with exit code ${code}`));
@@ -34,14 +36,13 @@ async function setupProject({
   serverFile,
 }) {
   const variant = language === "JavaScript" ? "react" : "react-ts";
-  projectDir = path.resolve(process.cwd(), projectName); // Resolve absolute path
+  projectDir = path.resolve(process.cwd(), projectName);
 
   const spinner = createSpinner(
     `Creating Vite ${language} project: ${projectName}...`
   ).start();
 
   try {
-    // Create the Vite project
     await runCommand("npm", [
       "create",
       "vite@latest",
@@ -52,12 +53,11 @@ async function setupProject({
     ]);
     spinner.success({ text: `Project ${projectName} created successfully!` });
 
-    // Verify the directory exists before changing
     if (!fs.existsSync(projectDir)) {
       throw new Error(`Directory ${projectDir} does not exist.`);
     }
 
-    process.chdir(projectDir); // Change to the project directory
+    process.chdir(projectDir);
     await installDependencies(
       addTailwind,
       addReactRouter,
@@ -66,7 +66,7 @@ async function setupProject({
     );
   } catch (error) {
     spinner.error({ text: `Error: ${error.message}` });
-    await cleanupProject(projectDir); // Clean up on failure
+    await cleanupProject(projectDir);
     process.exit(1);
   }
 }
@@ -80,23 +80,27 @@ async function installDependencies(
   const spinner = createSpinner("Installing dependencies...").start();
 
   try {
-    // Install project dependencies
     await runCommand("npm", ["install"]);
     spinner.success({ text: "Dependencies installed successfully!" });
 
-    // Setup additional features based on user input
     if (addTailwind) {
-      await setupTailwind();
+      spinner.start({ text: "Setting up Tailwind CSS..." });
+      await setupTailwind(spinner);
+      spinner.success({ text: "Tailwind CSS setup complete!" });
     }
     if (addReactRouter) {
-      await setupReactRouter();
+      spinner.start({ text: "Setting up React Router..." });
+      await setupReactRouter(spinner);
+      spinner.success({ text: "React Router setup complete!" });
     }
     if (addBackend) {
-      await setupExpress(serverFile); // Pass backend details to setupExpress
+      spinner.start({ text: "Setting up Express backend..." });
+      await setupExpress(serverFile, spinner);
+      spinner.success({ text: "Express backend setup complete!" });
     }
   } catch (error) {
     spinner.error({ text: `Error installing dependencies: ${error.message}` });
-    await cleanupProject(projectDir); // Clean up on failure
+    await cleanupProject(projectDir);
     process.exit(1);
   }
 }

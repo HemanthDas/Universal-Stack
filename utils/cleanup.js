@@ -4,6 +4,13 @@ import { existsSync } from "fs";
 
 const exec = promisify(execCallback);
 
+/**
+ * Asynchronously cleans up temporary files in the specified directory.
+ *
+ * @param {string} [dir=""] - The directory to clean up. If not provided or empty, no action is taken.
+ * @returns {Promise<void>} - A promise that resolves when the cleanup is complete.
+ * @throws {Error} - Throws an error if the cleanup process fails.
+ */
 export async function cleanupProject(dir = "") {
   if (dir && existsSync(dir)) {
     try {

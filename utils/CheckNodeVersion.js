@@ -1,6 +1,15 @@
 import { exec } from "child_process";
 import semver from "semver";
 
+/**
+ * Checks if the installed Node.js and NPM versions meet the minimum requirements.
+ * 
+ * This function checks if Node.js and NPM are installed on the system and verifies
+ * that the Node.js version is at least 14.0.0. If either Node.js or NPM is not installed,
+ * or if the Node.js version is too old, it rejects the promise with an appropriate error message.
+ * 
+ * @returns {Promise<void>} A promise that resolves if the checks pass, or rejects with an error message if they fail.
+ */
 function checkNodeAndNpm() {
   const MIN_NODE_VERSION = "14.0.0";
 

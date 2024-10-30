@@ -34,6 +34,7 @@ async function setupProject({
   addReactRouter,
   addBackend,
   serverFile,
+  dbChoice,
 }) {
   const variant = language === "JavaScript" ? "react" : "react-ts";
   projectDir = path.resolve(process.cwd(), projectName);
@@ -62,7 +63,8 @@ async function setupProject({
       addTailwind,
       addReactRouter,
       addBackend,
-      serverFile
+      serverFile,
+      dbChoice
     );
   } catch (error) {
     spinner.error({ text: `Error: ${error.message}` });
@@ -71,18 +73,29 @@ async function setupProject({
   }
 }
 
+/**
+ * Installs project dependencies and sets up additional configurations based on provided options.
+ *
+ * @param {boolean} addTailwind - Whether to set up Tailwind CSS.
+ * @param {boolean} addReactRouter - Whether to set up React Router.
+ * @param {boolean} addBackend - Whether to set up an Express backend.
+ * @param {string} serverFile - The server file path for the Express backend.
+ * @param {string} dbChoice - The database choice for the backend setup.
+ * @returns {Promise<void>} - A promise that resolves when the setup is complete.
+ */
 async function installDependencies(
   addTailwind,
   addReactRouter,
   addBackend,
-  serverFile
+  serverFile,
+  dbChoice
 ) {
   const spinner = createSpinner("Installing dependencies...").start();
 
   try {
     await runCommand("npm", ["install"]);
     spinner.success({ text: "Dependencies installed successfully!" });
-
+    await editEslintConfig();
     if (addTailwind) {
       spinner.start({ text: "Setting up Tailwind CSS..." });
       await setupTailwind(spinner);
@@ -95,7 +108,7 @@ async function installDependencies(
     }
     if (addBackend) {
       spinner.start({ text: "Setting up Express backend..." });
-      await setupExpress(serverFile, spinner);
+      await setupExpress(serverFile, dbChoice, spinner);
       spinner.success({ text: "Express backend setup complete!" });
     }
   } catch (error) {
@@ -104,5 +117,14 @@ async function installDependencies(
     process.exit(1);
   }
 }
+async function editEslintConfig() {
+  const eslintConfigPath = path.join(projectDir, "eslint.config.js");
+  const eslintConfig = await fs.promises.readFile(eslintConfigPath, "utf8");
+  const updatedConfig = eslintConfig.replace(
+    /ignores: \['dist'\]/,
+    "ignores: ['dist', 'backend']"
+  );
 
+  await fs.promises.writeFile(eslintConfigPath, updatedConfig, "utf8");
+}
 export { setupProject };

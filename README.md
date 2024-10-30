@@ -31,7 +31,7 @@ npm install -g .
 To start the project setup, run:
 
 ```bash
-universalstack
+npm run universalstack
 ```
 
 You will be prompted for the following configurations:

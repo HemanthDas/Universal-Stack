@@ -73,6 +73,7 @@ async function createDirectoriesAndSampleFiles(backendDir, dbChoice) {
     },
     { dir: "services", files: ["sampleService.js"], content: serviceSample() },
     { dir: "db", files: [dbFile], content: dbContent },
+    { dir: "models", files: ["SampleModel.js"], content: modelSample() },
     { dir: ".", files: [".env"], content: "PORT=5000\n" },
   ];
 

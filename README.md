@@ -1,4 +1,4 @@
-# UniversalStack
+# UniversalStack v1.0.2
 
 UniversalStack is a command-line utility that simplifies the setup of web applications using Vite, React, and Express. It allows you to quickly scaffold projects with optional Tailwind CSS, React Router, and Express backend configurations, including support for either MySQL or MongoDB databases.
 
@@ -13,17 +13,28 @@ UniversalStack is a command-line utility that simplifies the setup of web applic
 
 ## Installation
 
-Clone the repository:
+To use UniversalStack, you can either install it globally or use it directly with npx.
 
-```bash
-git clone <repository-url>
-cd UniversalStack
-```
+### Global Installation
 
 Install the package globally:
 
 ```bash
-npm install -g .
+npm install -g universalstack
+```
+
+After installation, you can start the project setup by running:
+
+```bash
+universalstack
+```
+
+### Using npx
+
+Alternatively, you can use npx to run UniversalStack without installing it globally:
+
+```bash
+npx universalstack
 ```
 
 ## Usage
@@ -31,7 +42,7 @@ npm install -g .
 To start the project setup, run:
 
 ```bash
-npm run universalstack
+universalstack
 ```
 
 You will be prompted for the following configurations:

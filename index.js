@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { checkNodeAndNpm } from "./utils/CheckNodeVersion.js";
 import { promptForSetup } from "./setup/promptSetup.js";
 import { cleanupProject } from "./utils/cleanup.js";

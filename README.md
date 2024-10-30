@@ -1,123 +1,103 @@
 # UniversalStack
 
-A powerful CLI tool to set up versatile full-stack projects quickly and efficiently. UniversalStack offers seamless integration of frontend frameworks like React, backend setups such as Express and Flask, and database configurations including MongoDB and SQL. It simplifies the project setup process, making it easy for developers to get started with their preferred tech stack.
+UniversalStack is a command-line utility that simplifies the setup of web applications using Vite, React, and Express. It allows you to quickly scaffold projects with optional Tailwind CSS, React Router, and Express backend configurations, including support for either MySQL or MongoDB databases.
 
-## ✨ Features
+## Features
 
-### Frontend Support:
-- React (with JavaScript or TypeScript)
-- Vite integration for modern and fast builds
+- **Easy Setup**: Quickly create a Vite + React project with optional features.
+- **Flexible Configurations**: Choose between JavaScript and TypeScript.
+- **Backend Integration**: Option to set up an Express backend with configurable server file names.
+- **Database Support**: Automatically generates connection files for either MySQL or MongoDB.
+- **Environment Management**: Automatically creates a .env file for configuration.
+- **Modular Architecture**: Organizes your project into clear directories for routes, controllers, services, and database connections.
 
-### Backend Options:
-- Express (Flask support coming soon)
+## Installation
 
-### Optional Add-ons:
-- Tailwind CSS
-- React Router
-
-### Database Integration:
-- MongoDB and SQL planned in future updates.
-
-### One-stop Full Stack Setup:
-- Set up both frontend and backend from a single CLI command.
-
-## 📦 Installation
-
-To install UniversalStack globally using npx:
+Clone the repository:
 
 ```bash
-npx universalstack
+git clone <repository-url>
+cd UniversalStack
 ```
 
-## 🚀 Usage
-
-After running the CLI, follow the interactive prompts to configure your project:
+Install the package globally:
 
 ```bash
-npx universalstack
+npm install -g .
 ```
 
-### Example Run:
-```plaintext
-✔ Enter your project name: my-cool-app
-✔ Select the Vite + React variant: JavaScript
-✔ Do you want to add Tailwind CSS? Yes
-✔ Do you want to add React Router? No
-✔ Do you want to set up an Express backend? Yes
-✔ Enter the name of the server file (default: server.js): index.js
+## Usage
+
+To start the project setup, run:
+
+```bash
+universalstack
 ```
 
-## 🛠️ Project Structure
+You will be prompted for the following configurations:
 
-After setup, your project will have the following structure:
+- **Project Name**: Enter the desired name for your project.
+- **Language**: Choose between JavaScript or TypeScript.
+- **Add Tailwind CSS**: Confirm if you want to include Tailwind CSS.
+- **Add React Router**: Confirm if you want to include React Router.
+- **Set Up Express Backend**: Confirm if you want to create an Express backend.
+- **Database Choice**: If you opt for the Express backend, select your preferred database (MySQL or MongoDB).
+
+### Example
+
+```bash
+$ universalstack
+Enter your project name: my-awesome-project
+Select the Vite + React variant: TypeScript
+Do you want to add Tailwind CSS? Yes
+Do you want to add React Router? Yes
+Do you want to set up an Express backend? Yes
+Select your database: MySQL
+```
+
+## Project Structure
+
+After running the setup, your project structure will look like this:
 
 ```plaintext
-my-cool-app/
+my-awesome-project/
 ├── backend/
-│   ├── routes/
-│   │   └── sampleRoute.js
 │   ├── controllers/
 │   │   └── sampleController.js
-│   ├── services/
-│   │   └── sampleService.js
 │   ├── db/
-│   │   └── dbConnection.js
+│   │   ├── dbConnection.js  // MySQL or mongoConnection.js for MongoDB
+│   ├── models/
+│   │   └── sampleModel.js
+│   ├── routes/
+│   │   └── sampleRoute.js
 │   ├── .env
-│   └── index.js
-├── src/
-│   ├── App.js
-│   ├── index.js
-│   └── index.css
-├── tailwind.config.js
-├── package.json
-└── README.md
+│   ├── server.js
+│   └── package.json
+└── src/
+    ├── App.tsx
+    └── main.tsx
 ```
 
-## 🔧 Commands
+## Dependencies
 
-Once your project is set up, you can start the development server:
+The following dependencies are installed based on your configuration:
 
-### Frontend:
-```bash
-# Navigate to your frontend directory
-cd my-cool-app
-npm install
-npm run dev
-```
+### For Express backend:
 
-### Backend (if Express is included):
-```bash
-# Navigate to the backend directory
-cd backend
-npm start
-```
+- `express`
+- `cors`
+- `dotenv`
+- `nodemon`
+- `mysql2` or `mongoose` (depending on the selected database)
 
-## 📂 Configurations
+## Ignored Files
 
-### Tailwind CSS
-Tailwind CSS is configured in `tailwind.config.js` and used in `src/index.css`.
+The backend directory is ignored from ESLint checks by default to avoid linting issues with server-side code.
 
-### Express Backend
-The backend is scaffolded with a simple Express server. Update `backend/routes/sampleRoute.js` and `backend/controllers/sampleController.js` to add your custom logic.
+## License
 
-## 🛡️ License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-This project is licensed under the MIT License.
+## Contributing
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit a pull request or open an issue on GitHub.
-
-## 📄 Changelog
-
-### v1.0.0:
-- Initial release with React, Express, Tailwind CSS, and React Router integration.
-
-## 💡 Future Roadmap
-- Add Flask support for backend.
-- Integrate MongoDB and SQL database options.
-- Support for more frontend frameworks (e.g., Next.js).
-
-## 🧑‍💻 Author
-
-Maintained by Your Name.
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or feature requests.

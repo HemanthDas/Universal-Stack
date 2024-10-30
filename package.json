@@ -1,6 +1,6 @@
 {
   "name": "universalstack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -21,6 +21,12 @@
     "figlet": "^1.8.0",
     "inquirer": "^12.0.0",
     "nanospinner": "^1.1.0",
-    "semver": "^7.6.3"
+    "semver": "^7.6.3",
+    "express": "^4.17.1",
+    "vite": "^3.0.0",
+    "react-router-dom": "^6.0.0",
+    "tailwindcss": "^3.0.0",
+    "mysql2": "^2.0.0",
+    "mongoose": "^6.0.0"
   }
 }

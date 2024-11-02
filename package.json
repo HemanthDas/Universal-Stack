@@ -1,6 +1,6 @@
 {
-  "name": "universalstack",
-  "version": "1.0.4",
+  "name": "create-universalstack",
+  "version": "1.0.5",
   "main": "index.js",
   "type": "module",
   "repository": {

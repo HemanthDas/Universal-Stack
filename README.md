@@ -1,74 +1,77 @@
-# UniversalStack v1.0.2
+# UniversalStack v1.0.5
 
-UniversalStack is a command-line utility that simplifies the setup of web applications using Vite, React, and Express. It allows you to quickly scaffold projects with optional Tailwind CSS, React Router, and Express backend configurations, including support for either MySQL or MongoDB databases.
+UniversalStack is a command-line utility for rapidly setting up a full-stack web application using Vite, React, and Express. It allows you to scaffold projects with optional configurations like Tailwind CSS, React Router, and an Express backend with MySQL or MongoDB support.
 
 ## Features
 
-- **Easy Setup**: Quickly create a Vite + React project with optional features.
-- **Flexible Configurations**: Choose between JavaScript and TypeScript.
-- **Backend Integration**: Option to set up an Express backend with configurable server file names.
-- **Database Support**: Automatically generates connection files for either MySQL or MongoDB.
-- **Environment Management**: Automatically creates a .env file for configuration.
-- **Modular Architecture**: Organizes your project into clear directories for routes, controllers, services, and database connections.
+- **Streamlined Setup**: Quickly create a Vite + React project with selected add-ons.
+- **Customizable Configurations**: Choose between JavaScript or TypeScript.
+- **Backend with Express**: Optionally set up an Express backend with custom server file names.
+- **Database Integration**: Supports MySQL or MongoDB, creating connection files automatically.
+- **Environment Management**: Generates a `.env` file with initial configurations.
+- **Enhanced Project Structure**: Organizes files for controllers, routes, services, and database connections for maintainable code.
 
 ## Installation
 
-To use UniversalStack, you can either install it globally or use it directly with npx.
+To use UniversalStack, you can either install it globally or run it directly with `npx`.
 
 ### Global Installation
 
 Install the package globally:
 
 ```bash
-npm install -g universalstack
+npm install -g create-universalstack
 ```
 
-After installation, you can start the project setup by running:
+After installation, initiate the setup with:
 
 ```bash
-universalstack
+npm create universalstack
 ```
 
-### Using npx
+### Using `npx`
 
-Alternatively, you can use npx to run UniversalStack without installing it globally:
+Alternatively, use `npx` to run UniversalStack without a global installation:
 
 ```bash
-npx universalstack
+npx create-universalstack
 ```
 
 ## Usage
 
-To start the project setup, run:
+To start creating a project, run:
 
 ```bash
-universalstack
+npm create universalstack
 ```
 
-You will be prompted for the following configurations:
+### Prompts
 
-- **Project Name**: Enter the desired name for your project.
-- **Language**: Choose between JavaScript or TypeScript.
-- **Add Tailwind CSS**: Confirm if you want to include Tailwind CSS.
-- **Add React Router**: Confirm if you want to include React Router.
-- **Set Up Express Backend**: Confirm if you want to create an Express backend.
-- **Database Choice**: If you opt for the Express backend, select your preferred database (MySQL or MongoDB).
+You will be guided through configuration prompts:
+
+- **Project Name**: Name your project.
+- **Language**: Choose JavaScript or TypeScript.
+- **Add Tailwind CSS**: Include Tailwind CSS if desired.
+- **Add React Router**: Optionally add React Router.
+- **Set Up Express Backend**: Opt-in to create an Express backend.
+- **Database Choice**: If an Express backend is chosen, select either MySQL or MongoDB.
 
 ### Example
 
 ```bash
-$ universalstack
-Enter your project name: my-awesome-project
-Select the Vite + React variant: TypeScript
-Do you want to add Tailwind CSS? Yes
-Do you want to add React Router? Yes
-Do you want to set up an Express backend? Yes
-Select your database: MySQL
+$ npm create universalstack
+✔ Enter your project name: my-awesome-project
+✔ Select the Vite + React variant: TypeScript
+✔ Do you want to add Tailwind CSS? Yes
+✔ Do you want to add React Router? Yes
+✔ Do you want to set up an Express backend? Yes
+✔ Enter the name of the server file (default: server.js): server.js
+✔ Choose the database to use: MySQL
 ```
 
 ## Project Structure
 
-After running the setup, your project structure will look like this:
+After setup, your project will have the following structure:
 
 ```plaintext
 my-awesome-project/
@@ -76,7 +79,7 @@ my-awesome-project/
 │   ├── controllers/
 │   │   └── sampleController.js
 │   ├── db/
-│   │   ├── dbConnection.js  // MySQL or mongoConnection.js for MongoDB
+│   │   ├── mysqlConnection.js  // or mongoConnection.js for MongoDB
 │   ├── models/
 │   │   └── sampleModel.js
 │   ├── routes/
@@ -91,7 +94,7 @@ my-awesome-project/
 
 ## Dependencies
 
-The following dependencies are installed based on your configuration:
+Dependencies are installed based on the configuration selected:
 
 ### For Express backend:
 
@@ -99,11 +102,16 @@ The following dependencies are installed based on your configuration:
 - `cors`
 - `dotenv`
 - `nodemon`
-- `mysql2` or `mongoose` (depending on the selected database)
+- `mysql2` (for MySQL) or `mongoose` (for MongoDB)
 
-## Ignored Files
+### Frontend Add-Ons:
 
-The backend directory is ignored from ESLint checks by default to avoid linting issues with server-side code.
+- `tailwindcss` if Tailwind CSS is selected.
+- `react-router-dom` if React Router is selected.
+
+## ESLint Configuration
+
+To keep frontend and backend code linted separately, the backend directory is ignored by default.
 
 ## License
 
@@ -111,4 +119,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or feature requests.
+Contributions are welcome! Open an issue or submit a pull request for new features or improvements.

@@ -52,11 +52,11 @@ async function setupProject({
       "--template",
       variant,
     ]);
-    spinner.success({ text: `Project ${projectName} created successfully!` });
 
     if (!fs.existsSync(projectDir)) {
       throw new Error(`Directory ${projectDir} does not exist.`);
     }
+    spinner.success({ text: `Project ${projectName} created successfully!` });
 
     process.chdir(projectDir);
     await installDependencies(

@@ -1,4 +1,4 @@
-# UniversalStack v1.0.5
+# UniversalStack v1.0.1
 
 UniversalStack is a command-line utility for rapidly setting up a full-stack web application using Vite, React, and Express. It allows you to scaffold projects with optional configurations like Tailwind CSS, React Router, and an Express backend with MySQL or MongoDB support.
 
